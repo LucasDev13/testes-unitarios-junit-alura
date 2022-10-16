@@ -26,7 +26,21 @@ class BonusServiceTest {
         //chamo o método e passo o que ele precisa.
         BigDecimal bonus = service.calcularBonus(new Funcionario("Lucas", LocalDate.now(), new BigDecimal("25000")));
 
-        assertEquals(BigDecimal.ZERO, bonus);
+        assertEquals(new BigDecimal("0.00"), bonus);
+    }
+
+    @Test
+    void bonusDeveriaSer10PorcentoDoSalario(){
+        var bonus = service.calcularBonus(new Funcionario("Lucas", LocalDate.now(), new BigDecimal("2500")));
+        assertEquals(new BigDecimal("250.00"), bonus);
+    }
+
+    @Test
+    void bonusDeveriaSerDezPorCentoParaSalarioDeExatamente10000() {
+        BonusService service = new BonusService();
+        BigDecimal bonus = service.calcularBonus(new Funcionario("Rodrigo", LocalDate.now(), new BigDecimal("10000")));
+
+        assertEquals(new BigDecimal("1000.00"), bonus);
     }
 
     @Test
@@ -36,6 +50,6 @@ class BonusServiceTest {
         //chamo o método e passo o que ele precisa.
         BigDecimal bonus = service.calcularBonus(new Funcionario("Lucas", LocalDate.now(), new BigDecimal("2000")));
 
-        assertEquals(new BigDecimal("1000"), bonus);
+        assertEquals(new BigDecimal("1000.00"), bonus);
     }
 }

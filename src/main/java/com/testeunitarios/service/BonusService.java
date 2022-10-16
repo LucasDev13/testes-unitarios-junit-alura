@@ -4,6 +4,7 @@ import com.testeunitarios.model.Calculadora;
 import com.testeunitarios.model.Funcionario;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.LocalDate;
 
 public class BonusService {
@@ -12,7 +13,7 @@ public class BonusService {
         var calc = new Calculadora();
         BigDecimal valor = funcionario.getSalario().multiply(new BigDecimal("0.1"));
         if (valor.compareTo(new BigDecimal("1000")) > 0) {
-            valor = BigDecimal.ZERO;
+            throw new IllegalArgumentException("Funcionario com salario maior do que R$ 10000 não pode receber bonus!");
         }
         String s = returnString();
         if (valor.compareTo(new BigDecimal("50")) > 0) {
@@ -20,7 +21,7 @@ public class BonusService {
         }
         int i = returnIntDual();
 
-        return valor;
+        return valor.setScale(2, RoundingMode.HALF_UP);
     }
 
     public String returnString() {
